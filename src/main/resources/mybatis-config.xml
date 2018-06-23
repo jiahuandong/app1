@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	
+	<!-- 2. settings: 包含了很多重要的设置项，可以影响Mybatis框架的运行行为.
+			  setting: 单个的设置项
+			  	name: 设置项的名称
+			  	value:设置项的取值.
+	  -->
+	<settings>
+		<!-- 映射下划线(数据库) 到 驼峰命名(java) eg:  last_name ====> lastName -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		
+		<!-- 配置MyBatis对null值的默认处理 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		
+		<!-- 开启延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<!-- 配置加载的数据为按需加载 -->
+		<setting name="aggressiveLazyLoading" value="false"/>
+		
+		<!-- 配置使用二级缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+	
+	 
+	
+	<!-- 
+		7. databaseIdProvider:  MyBatis对多数据的支持。 MyBatis可以根据底层使用的不同的数据库来执行不同的sql语句。 
+							       也是MyBatis对于移植性方便的考虑. 
+		   DB_VENDOR: VendorDatabaseIdProvider	
+		   
+		     获取数据库厂商的标识名:Connection.getMetaData().getDatabaseProductName();
+		   
+	 -->
+	 <databaseIdProvider type="DB_VENDOR">
+	 	<!-- 为不同的数据库厂商取别名， 用于将来在sql语句中databaseId的指定 -->
+	 	<property name="MySQL" value="mysql"/>
+	 	<property name="Oracle" value="oracle"/>
+	 	<property name="SQL Server" value="sqlServer"/>
+	 </databaseIdProvider>
+	
+</configuration>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhd.app.mapper.ProductMapper">
+	
+	<insert id="addProductClass" parameterType="map">
+		insert into productclass(className,createAt) values(#{className},NOW())
+	</insert>
+	
+	<insert id="addProduct" useGeneratedKeys="true" keyProperty="id" parameterType="com.jhd.app.beans.Product">
+	insert into product(name,price,model,proClassId,comment,createAt)
+	values(#{name},#{price},#{model},#{proClassId},#{comment},NOW())
+	</insert>
+	
+	<select id="productList" resultType="map" parameterType="map">
+		select
+		p.id id,
+		p.name name,
+		p.price price,
+		p.model model,
+		p.comment comment,
+		p.status status,
+		DATE_FORMAT(p.createAt,'%Y-%m-%d %H:%i:%s') createAt,
+		pc.id pcId,
+		pc.className className
+		from 
+		product p
+		LEFT JOIN productclass pc
+		on p.proClassId = pc.id and pc.isDel = 0
+		where p.isDel = 0 
+		<if test="proClassId != null and proclassId !=''">
+			and p.proClassId = #{proClassId}
+		</if>
+		<if test="name != null and name != ''">
+			and p.name like #{name}
+		</if>
+		ORDER BY proClassId
+	</select>
+	
+	<select id="proClassList" resultType="map">
+		select id,className,DATE_FORMAT(createAt,'%Y-%m-%d') createAt from productclass where isDel = 0;
+	</select>
+	
+	
+	<update id="updateProductClass" parameterType="map">
+		update productclass set
+		className = #{className}
+		where id = #{id} and isDel = 0
+	</update>
+	
+	<update id="updateProduct" parameterType="com.jhd.app.beans.Product">
+		update product 
+		<set>
+		<if test="name != null and name != ''">
+			name = #{name},
+		</if>
+		<if test="price != null and price >= 0">
+			price = #{price},
+		</if>
+		<if test="model != null and model != ''">
+			model = #{model},
+		</if>
+		<if test="proClassId != null and proClassId >= 0">
+			proClassId = #{proClassId},
+		</if>
+		<if test="comment != null and comment != ''">
+			comment = #{comment},
+		</if>
+		<if test="status != null and status != ''">
+			status = #{status}
+		</if>
+		</set>
+		where id = #{id} and isDel = 0
+	</update>
+	
+	<update id="deleteProduct" parameterType="int">
+		update product set isDel = 1 where id = #{id}
+	</update>
+	
+	<update id="deleteProClass" parameterType="int">
+		update productclass set isDel = 1 where id = #{id}
+	</update>
+
+</mapper>

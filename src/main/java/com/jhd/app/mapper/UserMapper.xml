@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhd.app.mapper.UserMapper">
+	<select id="getUser" resultType="com.jhd.app.beans.User" parameterType="hashmap">
+		select * from user where loginAccount = #{loginAccount} and passWord = #{passWord} and isDel = 0
+	</select>
+</mapper>

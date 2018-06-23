@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<context:component-scan base-package="com.jhd.app">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 连接池 -->
+	<context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>
+	 <!-- 定义数据源Bean -->
+    <!-- Druid -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${jdbc.username}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+    </bean>
+	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean> -->
+	
+	<!-- 事务管理器 -->
+	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+
+	<!--  整合Mybatis -->
+	<!-- 1. SqlSession的创建 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		<!-- 注入连接 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- MyBatis的全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- SQL映射文件 -->
+		<!-- <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"></property> -->
+		<property name="typeAliasesPackage" value="com.jhd.app.beans"></property>
+	</bean>
+	
+	<!-- 2. Mapper接口代理实现类的创建, MapperScannerConfigurer会批量生成指定包下的接口的代理实现类， 
+			代理实现类的对象已经交给IOC容器, 默认的id值就是 接口名首字母小写. 
+			eg: EmployeeMapper == > employeeMapper
+	 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jhd.app.mapper"></property>
+	</bean>
+	
+	<!-- <mybatis-spring:scan base-package="com.myapp.mapper"/> -->
+		
+</beans>
