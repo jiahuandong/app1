@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhd.app.mapper.TablesMapper">
+  <insert id="addTable" useGeneratedKeys="true" keyProperty="id" parameterType="com.jhd.app.beans.Tables">
+          insert INTO tables (t_number,createAt)
+          values(#{t_number},#{createAt})
+  </insert>
+
+  <update id="updateTable" parameterType="com.jhd.app.beans.Tables">
+          update tables SET
+          t_number = #{t_number},
+          status = #{status}
+          where id = #{id} and isDel = 0
+  </update>
+  <update id="delTable" parameterType="com.jhd.app.beans.Tables">
+          update tables SET
+          isDel = #{isDel}
+          where id = #{id} and t_number = #{t_number}
+  </update>
+</mapper>

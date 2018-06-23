@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhd.app.mapper.OrderMapper">
+  <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.jhd.app.beans.Order">
+      insert INTO ORDER ( t_number,createAt)
+      values(#{t_number},#{createAt})
+  </insert>
+
+  <insert id="addOrderItem" useGeneratedKeys="true" keyProperty="id" parameterType="com.jhd.app.beans.OrderItem">
+      insert INTO orderItem (orderId,productId,count,comment,)
+      values(#{orderId},#{productId},#{count},#{comment})
+  </insert>
+</mapper>
