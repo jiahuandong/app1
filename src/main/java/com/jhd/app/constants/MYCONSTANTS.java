@@ -20,4 +20,8 @@ public class MYCONSTANTS {
 	public static final String DELPRODUCT = "删除产品成功！";
 	public static final String DELPROCLASSERROR = "删除产品分类失败！";
 	public static final String DELPROCLASS = "删除产品分类成功！";
+	public static final String ADDTABLEOK = "添加桌位成功！";
+	public static final String ADDTABLEERROR = "添加桌位失败！";
+	public static final String GETTABLESOK = "获取桌位列表成功";
+	public static final String GETTABLESERROR = "获取桌位列表失败";
 }

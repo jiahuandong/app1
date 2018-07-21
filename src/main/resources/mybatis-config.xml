@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	
+
 	
 	<!-- 2. settings: 包含了很多重要的设置项，可以影响Mybatis框架的运行行为.
 			  setting: 单个的设置项
@@ -25,6 +25,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<!-- 配置使用二级缓存 -->
 		<setting name="cacheEnabled" value="true"/>
+
+		<!-- 输出sql -->
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+
 	</settings>
 	
 	 

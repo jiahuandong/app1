@@ -17,6 +17,6 @@ public class Product {
 	private String comment;
 	private Integer proClassId;
 	private Date createAt;
-	private Integer status;
+	private Integer status; // 0£ºÕý³££»1£ºÈ±»õ£»
 	private Integer isDel;
 }

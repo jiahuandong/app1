@@ -9,12 +9,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-	<a class="navbar-brand" style="font-family: '微软雅黑'; color: white; " href="javascript:;">企业进销存管理系统</a>
+
+	<a class="navbar-brand" style="font-family: '微软雅黑'; color: white; " href="javascript:;"><span><img src="img/logo.png" style="width: 70px;" alt=""></span>&nbsp;&nbsp;企业进销存管理系统</a>
+
 </div>
 
 <!-- Collect the nav links, forms, and other content for toggling -->
 <div class="collapse navbar-collapse navbar-ex1-collapse">
-	<ul class="nav navbar-nav side-nav"">
+	<ul class="nav navbar-nav side-nav">
 		<li class="active">
 			<a href="index.do"><i class="glyphicon glyphicon-home"></i> &nbsp;菜单首页</a>
 		</li>

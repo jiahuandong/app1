@@ -12,7 +12,6 @@
   <%@ include file="/WEB-INF/pages/base.jsp" %>
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
   <!-- Add custom CSS here -->
   <link rel="stylesheet" href="font-awesome/css/bootstrap.min.css">
@@ -39,78 +38,47 @@
     <div class="row">
       <div class="col-lg-12">
         <ol class="breadcrumb">
-          <li class="active"><i class="glyphicon glyphicon-map-marker"></i> 销售管理 >> 订单操作</li>
+          <li class="active"><i class="glyphicon glyphicon-map-marker"></i> 销售管理 >> 桌位管理</li>
         </ol>
       </div>
     </div> <!--end row-->
 
-      <br>
-      <div class="row"  align="center">
-          <div class='col-sm-4'>
-              <div class="form-group">
-                  <%--<label>选择开始时间：</label>--%>
-                  <!--指定 date标记-->
-                  <div class='input-group date' id='datetimepicker1'>
-                      <input type='text' class="form-control" placeholder="选择开始时间"/>
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                  </div>
-              </div>
-          </div>
-          <div class='col-sm-4'>
-              <div class="form-group">
-                  <%--<label>选择结束时间：</label>--%>
-                  <!--指定 date标记-->
-                  <div class='input-group date' id='datetimepicker2'>
-                      <input type='text' class="form-control" placeholder="选择结束时间" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                  </div>
-              </div>
-          </div>
-          <div class="col-sm-4">
-              <%--<label>请输入桌号：</label>--%>
-              <div class="input-group ">
-                  <input type="text" placeholder="请输入桌号" class="form-control input-sm"><span class="input-group-addon btn-primary btn-sm"><span class="glyphicon glyphicon-search"></span> 搜索</span>
-              </div>
-          </div>
+    <br>
+    <div class="row" align="center">
+      <div class="input-group col-lg-5">
+            <input type="text" placeholder="请输入桌号" class="form-control input-sm"><span class="input-group-addon btn-primary btn-sm"><span class="glyphicon glyphicon-search"></span> 搜索</span>
       </div>
+    </div>
     <br />
     <div class="row" align="center">
-      <a type="button" class="btn btn-primary btn-sm" href="toAddOrder.do"><span class="glyphicon glyphicon-plus-sign"></span> 创建订单</a>
-      <a type="button" href="orders.do" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-list"></span> 全部订单</a>
-        <a type="button" href="toTables.do"class="btn btn-success btn-sm"><span class="glyphicon glyphicon-screenshot"></span> 桌位设置</a>
+      <a type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> 添加桌位</a>
+      <a type="button" href="toTable.do" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-list"></span> 桌位列表</a>
+      <a type="button" href="order.do" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-screenshot"></span> 订单管理</a>
     </div><br />
     <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-money"></i> 订单列表</h3>
+            <h3 class="panel-title"><i class="fa fa-money"></i> 桌位列表</h3>
           </div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-bordered table-hover table-striped tablesorter">
                 <thead>
                 <tr>
-                  <th>订单编号 <i class="fa fa-sort"></i></th>
                   <th>桌位编号 <i class="fa fa-sort"></i></th>
-                  <th>订单日期 <i class="fa fa-sort"></i></th>
-                  <th>下单时间 <i class="fa fa-sort"></i></th>
-                  <th>订单金额 <i class="fa fa-sort"></i></th>
-                  <th>实收金额 <i class="fa fa-sort"></i></th>
+                  <th>桌位类型 <i class="fa fa-sort"></i></th>
+                  <th>座位数 <i class="fa fa-sort"></i></th>
+                  <th>可用状态 <i class="fa fa-sort"></i></th>
                   <th>操作<i class="fa fa-sort"></i></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr valign="middle">
-                  <td>3326</td>
-                  <td>3326</td>
-                  <td>10/21/2013</td>
-                  <td>3:29 PM</td>
-                  <td>$321.33</td>
-                  <td>$321.33</td>
+                <tr valign="middle" ng-repeat="table in tablesList">
+                  <td>{{table.tNumber}}</td>
+                  <td>{{table.tableClass}}</td>
+                  <td>{{table.peopleNum}}</td>
+                  <td>{{table.status == 0? '可用':'不可用'}}</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span> 修改</button>
                     <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> 删除</button>
@@ -145,8 +113,6 @@
 <script src="js/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="js/angular.min.js" ></script>
 <script src="js/bootstrap.js"></script>
-<script src="js/moment-with-locales.min.js"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
 <!-- Page Specific Plugins -->
 <script src="js/raphael-min.js"></script>
 <script src="js/morris-0.4.3.min.js"></script>
@@ -155,37 +121,18 @@
 <script src="js/tablesorter/tables.js"></script>
 <script src="layer/layer.js"></script>
 <script>
-    $(function () {
-        var picker1 = $('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD hh:mm',
-            locale: moment.locale('zh-cn'),
-            //minDate:'2018-01-01'
-        });
-        var picker2 = $('#datetimepicker2').datetimepicker({
-            format: 'YYYY-MM-DD hh:mm',
-            locale: moment.locale('zh-cn')
-        });
-        //动态设置最小值
-        picker1.on('dp.change', function (e) {
-            picker2.data('DateTimePicker').minDate(e.date);
-        });
-        //动态设置最大值
-        picker2.on('dp.change', function (e) {
-            picker1.data('DateTimePicker').maxDate(e.date);
-        });
-    });
-    angular.module('myApp',[])
+  angular.module('myApp',[])
           .controller('Myctrl',function($scope,$http){
             var loadingIndex = -1 ;
             //页面打开加载全部分类
             $http({
               method:'POST',
               /*  headers:{'Content-Type': 'application/x-www-form-urlencoded'}, */
-              url:'proClassList.do'
+              url:'getAllTables.do'
             }).then(function success(req){
                       console.log(req.data.success);
                       if(true==req.data.success){
-                        $scope.proClassList =  req.data.proClassList;
+                        $scope.tablesList =  req.data.tablesList;
                       }
 
                     },function error(result){
@@ -346,3 +293,4 @@
 </script>
 </body>
 </html>
+
